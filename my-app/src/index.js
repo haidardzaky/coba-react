@@ -6,25 +6,36 @@ import './index.css';
 
 class Square extends React.Component {
 
-  constructor(props){
-    super(props);
-    this.state = {
-      squares: Array(9).fill(null),
-    };
-  }
-
   render() {
     return (
-      <button className="square" onClick={() => this.setState({value: 'X'})}>
-        {this.state.value}
+      <button className = "square" onClick = {() => this.props.onClick()}>
+      {this.props.value}
       </button>
     );
   }
 }
 
 class Board extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      squares: Array(9).fill(null),
+    };
+  }
+
+  handleClick(i) {
+    const squares = this.state.squares.slice();
+    squares[i] = 'X';
+    this.setState({squares: squares});
+  }
+
   renderSquare(i) {
-    return <Square value={this.state.squares[i]} />;
+    return (
+      <Square
+        value={this.state.squares[i]}
+        onClick={() => this.handleClick(i)}
+      />
+    );
   }
 
   render() {
@@ -55,23 +66,27 @@ class Board extends React.Component {
 
 class Game extends React.Component {
   render() {
-    return (
-      <div className="game">
-        <div className="game-board">
-          <Board />
-        </div>
-        <div className="game-info">
-          <div>{/* status */}</div>
-          <ol>{/* TODO */}</ol>
-        </div>
-      </div>
+    return ( <
+      div className = "game" >
+      <
+      div className = "game-board" >
+      <
+      Board / >
+      <
+      /div> <
+      div className = "game-info" >
+      <
+      div > { /* status */ } < /div> <
+      ol > { /* TODO */ } < /ol> < /
+      div > <
+      /div>
     );
   }
 }
 
 // ========================================
 
-ReactDOM.render(
-  <Game />,
+ReactDOM.render( <
+  Game / > ,
   document.getElementById('root')
 );
